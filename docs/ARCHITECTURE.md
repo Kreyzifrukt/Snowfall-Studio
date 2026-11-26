@@ -105,6 +105,8 @@ The intended effect pipeline is:
 4. The renderer draws the current simulation snapshot through a WPF `DrawingContext`.
 5. Pause, resize, reset, and dispose are handled through explicit lifecycle operations.
 
+`WeatherEffectRuntime` now provides the initial lifecycle coordinator. It creates effects through `IWeatherEffectFactory`, initializes the replacement before disposing the previous effect, and forwards frame updates and reset calls. It is not wired into the legacy application yet, and no production Snow factory is registered. Rain and Leaves have no registered factories and remain inert placeholders.
+
 A future implementation should pass immutable render snapshots from simulation to renderer. Renderers must not mutate simulation state.
 
 ## Effect implementation status

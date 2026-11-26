@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>SnowfallStudio.Rendering.Wpf</RootNamespace>
+    <AssemblyName>SnowfallStudio.Rendering.Wpf</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SnowfallStudio.Core\SnowfallStudio.Core.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,4 +1,4 @@
-namespace Snowfall Studio;
+namespace Flake;
 
 internal enum AppLanguage
 {

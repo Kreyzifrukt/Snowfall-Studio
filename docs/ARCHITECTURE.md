@@ -1,45 +1,124 @@
-# Architecture
+# Snowfall Studio architecture
 
-## Current components
+**Architecture status:** foundation skeleton added; legacy snowfall engine has not yet been migrated into the new layers.
 
-- `App` owns application lifetime, the notification-area icon, current weather settings, and the settings window.
-- `MainWindow` is the transparent, click-through desktop overlay.
-- `SnowField` owns the particle collection, animation loop, collision checks, and WPF drawing.
-- `SnowSurface` stores the snow-height profile, adds snow where particles land, preserves the profile during overlay resizing, and caches the snow-layer geometry.
-- `Snowflake` stores per-particle position and visual/physical parameters.
-- `Snowball` stores the position, velocity, size, rotation, and mass used by the interactive rigid-circle simulation.
-- `Snowman` groups three existing snowballs, keeps their stack aligned, and draws the face, scarf, and buttons.
-- `WeatherSettings` is an immutable settings snapshot. Applying a new snapshot updates the simulation without rebuilding every particle unless the selected preset changes particle count.
-- `SettingsWindow` edits weather settings and sends updated snapshots to `App`.
-- `NativeWindowStyles` contains the Win32 interop needed to make the overlay click-through.
-- `CursorInput` reads the global pointer position and physical left-button state through Win32 without capturing mouse input or changing the overlay hit-testing behavior.
+## Solution layout
 
-## Weather simulation
+```text
+src/
+  SnowfallStudio.Core/
+    Configuration/
+    Effects/
+  SnowfallStudio.Application/
+    Configuration/
+    Effects/
+  SnowfallStudio.Infrastructure/
+    Configuration/
+  SnowfallStudio.Platform.Windows/
+    Displays/
+    Overlay/
+  SnowfallStudio.Rendering.Wpf/
+    Effects/
+      Rain/
+      Leaves/
+  Flake.App/                 # legacy WPF composition host, retained temporarily
+```
 
-The simulation advances particles using elapsed frame time rather than assuming a fixed frame rate. Wind adds a horizontal velocity in the selected direction. Falling speed and flake size are multipliers applied to each particle's base values. Weather presets adjust particle count and the three physical settings together; individual controls can then be fine-tuned. When a falling particle reaches the current snow surface, it deposits a small Gaussian-shaped amount of snow around its landing point and respawns above the screen. The resulting height profile is rendered as a single cached WPF geometry behind the falling particles. The profile is bounded to prevent the snow from covering most of the desktop. The tray menu can clear the profile without restarting the application.
+## Projects and responsibilities
 
-Cursor interaction is processed alongside the existing animation loop. Scatter mode applies a short-lived radial impulse to nearby particles. Mitten mode disables that repulsion and draws a small cursor marker. Global pointer polling toggles hit testing only in a narrow band around the accumulated snow surface; WPF captures the mouse only after the user presses on that band. While the button is held, pointer movement removes brush-shaped portions of the snow surface and adds the collected amount to a temporary forming snowball that follows the pointer. Releasing the button drops the formed ball into the simulation. Other overlay regions remain click-through.
+### SnowfallStudio.Core
 
-The overlay remains a single WPF visual rather than creating one native window per particle or snow object. Hand-formed snowballs share the existing render loop. Their motion uses frame time, gravity, surface slope, rolling friction, screen-boundary response, and mass-weighted circle collisions. A ball gains additional radius when rolled across an existing snow layer. Three stable balls stacked in decreasing size are snapped into a snowman; the bottom ball remains the physical base and the other two stay aligned to it. No snowball is spawned from a menu command: every ball starts as snow collected from the visible surface.
+Platform-neutral contracts and models:
+- stable effect identifiers and descriptors;
+- effect lifecycle contract (`IWeatherEffect`);
+- frame timing and viewport context;
+- application preference model.
 
-Mouse interaction uses two paths. Snow gathering uses WPF hit testing in a narrow surface band and captures the pointer only for the duration of the left-button drag. Dragging completed snowballs or snowmen also uses WPF hit testing and mouse capture. The native click-through style is disabled only over the gatherable surface, those objects, or during an active drag; elsewhere the overlay passes clicks to desktop applications.
+Core must not reference WPF, WinForms, Win32, or another project in this solution.
 
-## Current limitations
+### SnowfallStudio.Application
 
-- Weather settings are held in memory and reset when the application exits.
-- Wind is horizontal only.
-- Accumulation is limited to the bottom edge of the desktop overlay; snow does not settle on individual application windows or model their shapes.
-- The snow layer is not persisted after the application exits.
-- Manual snow gathering, snowball formation, drag input, and snowman collision stability are implemented in the development branch but still require manual Windows verification.
-- Interaction with individual application windows is not implemented.
-- Multi-monitor and mixed-DPI behavior still requires broader testing.
-- Cursor position conversion, snow-surface hit testing, and the mitten gathering brush need manual verification on multi-monitor and mixed-DPI desktops.
+Application orchestration and use cases:
+- `WeatherEffectCatalog` describes which effects are known and their implementation status;
+- `ISettingsStore` defines the persistence boundary;
+- `SettingsService` owns application-level loading and default selection.
 
-## User-facing maintenance improvements
+The catalog is metadata, not an effect runtime. The current Snow effect is still hosted by the legacy WPF pipeline.
 
-- `Localization` provides English (default), Russian, and Ukrainian strings for the settings window, help tab, and notification-area menu. `AppLanguage` is part of the in-memory settings snapshot; language changes are applied immediately and are not persisted yet.
-- `SettingsWindow` contains Weather, Guide, and Language tabs. The guide is localized with the selected language.
-- `WeatherSettings.ClearZonePercent` defines the portion of screen height that remains clear above the general snow layer. The surface converts it into a maximum accumulation depth. Future independent snowdrift objects should own separate bounds rather than reusing this general-layer limit.
-- `SnowSurface.BeginAnimatedClear` and `UpdateClearAnimation` gradually scale the current snow profile to zero. New deposits are ignored while the clearing animation is active, avoiding a race between the broom animation and falling particles.
-- Wind can be disabled. When enabled, its horizontal velocity varies gently over time to simulate gusts; the small per-particle drift remains when wind is disabled.
-- Cursor interaction can be disabled independently. Scatter mode repels nearby particles; Mitten mode draws a mitten marker and lets the user hold the left mouse button while moving across accumulated snow to form a ball. WPF captures the mouse only during that drag; the rest of the overlay remains click-through.
+### SnowfallStudio.Infrastructure
+
+External-resource implementations:
+- `JsonSettingsStore` stores settings under the current user's LocalApplicationData directory;
+- writes use a temporary file before replacing the target file.
+
+The settings service and JSON store are scaffolding at this stage. They are not yet wired into application startup, shutdown, or the settings window.
+
+### SnowfallStudio.Platform.Windows
+
+Windows-specific integration boundaries:
+- monitor enumeration and normalized display metadata;
+- desktop overlay click-through and pause control.
+
+Only interfaces and data contracts exist initially. The legacy Win32 implementation remains in `Flake.App/Interop` until a behavior-preserving migration is verified.
+
+### SnowfallStudio.Rendering.Wpf
+
+WPF-specific drawing adapters:
+- `IWeatherEffectRenderer` separates drawing from simulation;
+- Rain and Leaves effect/renderer classes are explicit inert placeholders;
+- placeholders intentionally draw nothing and perform no simulation.
+
+The existing `SnowField`, `SnowSurface`, and related snow classes remain in the legacy application for now. They are not falsely represented as migrated.
+
+### Legacy WPF host
+
+`Flake.App` currently remains the executable composition root and owns the old `App`, tray icon, settings window, overlay window, localization, and rendering engine. It references the new projects to keep them in the solution and make the future migration incremental. Namespace and folder renaming are deliberately deferred.
+
+## Dependency direction
+
+```text
+                 SnowfallStudio.App (legacy host)
+                  /       |       |       \
+                 v        v       v        v
+          Application  Infrastructure  Platform.Windows  Rendering.Wpf
+                 |          |              |                  |
+                 v          v              v                  v
+                         Core <-------------+------------------+
+```
+
+More precisely:
+- Application -> Core
+- Infrastructure -> Application + Core
+- Platform.Windows -> Core
+- Rendering.Wpf -> Core
+- App -> all modules as the composition root
+
+Dependencies must point inward. Core and Application must never reference WPF or Win32.
+
+## Effect lifecycle
+
+The intended effect pipeline is:
+
+1. The application selects an effect by its stable identifier.
+2. An effect implementation is created and initialized for the active viewport.
+3. The simulation receives elapsed and delta time through `EffectFrameContext`.
+4. The renderer draws the current simulation snapshot through a WPF `DrawingContext`.
+5. Pause, resize, reset, and dispose are handled through explicit lifecycle operations.
+
+A future implementation should pass immutable render snapshots from simulation to renderer. Renderers must not mutate simulation state.
+
+## Effect implementation status
+
+| Effect | Current status | Notes |
+|---|---|---|
+| Snow | LegacyIntegrated | Existing implementation remains in `Flake.App/Rendering`; not migrated |
+| Rain | PlannedStub | Lifecycle and renderer placeholders only; no particles or drawing |
+| Leaves | PlannedStub | Lifecycle and renderer placeholders only; no particles or drawing |
+
+The status catalog must be updated only when the corresponding implementation and verification are complete.
+
+## Current legacy implementation
+
+The existing `SnowField` still combines particle updates, snow accumulation, cursor interaction, snowball/snowman simulation, WPF drawing, and the animation callback. The old `App` still coordinates the tray icon, settings window, and overlay. This coupling is a known migration target, not a reason to rewrite everything in one change.
+
+See [Implementation plan](IMPLEMENTATION-PLAN.md) for the staged migration and exit criteria.

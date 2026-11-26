@@ -1,4 +1,4 @@
-namespace Flake;
+namespace Snowfall Studio;
 
 internal enum AppLanguage
 {
@@ -13,7 +13,7 @@ internal static class Localization
     [
         new Dictionary<string, string>
         {
-            ["settingsTitle"] = "Flake settings",
+            ["settingsTitle"] = "Snowfall Studio settings",
             ["tabWeather"] = "Weather",
             ["tabGuide"] = "Guide",
             ["tabLanguage"] = "Language",
@@ -39,20 +39,20 @@ internal static class Localization
             ["large"] = "Large",
             ["slow"] = "Slow",
             ["fast"] = "Fast",
-            ["guideTitle"] = "Using Flake",
-            ["guideIntro"] = "Flake adds animated snowfall over your desktop. The overlay is click-through, so you can keep using your windows normally.",
-            ["guidePause"] = "Pause or resume snowfall: use the Flake icon in the notification area, or double-click it.",
+            ["guideTitle"] = "Using Snowfall Studio",
+            ["guideIntro"] = "Snowfall Studio adds animated snowfall over your desktop. The overlay is click-through, so you can keep using your windows normally.",
+            ["guidePause"] = "Pause or resume snowfall: use the Snowfall Studio icon in the notification area, or double-click it.",
             ["guideClear"] = "Clear snow: choose “Clear accumulated snow” in the tray menu. The snow layer will be swept away with an animation.",
             ["guideSettings"] = "Weather settings: choose a preset or adjust wind, flake size, and falling speed. Changes apply immediately.",
             ["guideSafeZone"] = "Clear desktop area: choose how much of the screen above the snow layer must remain clear. The snow cannot grow into that area.",
             ["guideWind"] = "Wind: turn it on for changing horizontal gusts, or turn it off for a calmer snowfall.",
             ["guideCursor"] = "Cursor interaction: snowflakes move away from the pointer in Scatter mode. In Mitten mode, hold the left mouse button on the snow surface and drag to collect it into a ball. Only the snow surface and finished snow objects intercept mouse input; the rest of the overlay stays click-through.",
             ["guideSnowballs"] = "Snowmen: switch the cursor interaction mode to Mitten. Hold the left mouse button on accumulated snow and move across the snowdrift to form a ball. Release to drop it. Make a large, medium, and small ball, then drag and stack them from largest at the bottom to smallest at the top. A stable stack becomes a snowman.",
-            ["guideNote"] = "Settings are currently reset when Flake exits. Snow accumulation is also kept only for the current session.",
+            ["guideNote"] = "Settings are currently reset when Snowfall Studio exits. Snow accumulation is also kept only for the current session.",
             ["languageLabel"] = "Interface language",
             ["languageHint"] = "Choose English, Russian, or Ukrainian. No restart is required.",
-            ["trayTooltip"] = "Flake - desktop snowfall",
-            ["trayRunning"] = "Flake is running",
+            ["trayTooltip"] = "Snowfall Studio - desktop snowfall",
+            ["trayRunning"] = "Snowfall Studio is running",
             ["trayPause"] = "Pause snowfall",
             ["trayResume"] = "Resume snowfall",
             ["trayClear"] = "Clear accumulated snow",
@@ -60,11 +60,11 @@ internal static class Localization
             ["trayClearAllSnow"] = "Clear all snow (including falling)",
             ["traySettings"] = "Settings...",
             ["trayWeatherMode"] = "Weather mode",
-            ["trayExit"] = "Exit Flake"
+            ["trayExit"] = "Exit Snowfall Studio"
         },
         new Dictionary<string, string>
         {
-            ["settingsTitle"] = "Настройки Flake",
+            ["settingsTitle"] = "Настройки Snowfall Studio",
             ["tabWeather"] = "Погода",
             ["tabGuide"] = "Инструкция",
             ["tabLanguage"] = "Язык",
@@ -90,20 +90,20 @@ internal static class Localization
             ["large"] = "Большой",
             ["slow"] = "Медленно",
             ["fast"] = "Быстро",
-            ["guideTitle"] = "Как пользоваться Flake",
-            ["guideIntro"] = "Flake добавляет анимированный снег поверх рабочего стола. Оверлей пропускает клики, поэтому окнами можно пользоваться как обычно.",
-            ["guidePause"] = "Пауза и продолжение снегопада: используйте значок Flake в области уведомлений или дважды нажмите на него.",
+            ["guideTitle"] = "Как пользоваться Snowfall Studio",
+            ["guideIntro"] = "Snowfall Studio добавляет анимированный снег поверх рабочего стола. Оверлей пропускает клики, поэтому окнами можно пользоваться как обычно.",
+            ["guidePause"] = "Пауза и продолжение снегопада: используйте значок Snowfall Studio в области уведомлений или дважды нажмите на него.",
             ["guideClear"] = "Уборка снега: выберите «Очистить накопленный снег» в меню значка. Слой будет плавно убран анимацией.",
             ["guideSettings"] = "Настройки погоды: выберите режим или измените ветер, размер снежинок и скорость падения. Изменения применяются сразу.",
             ["guideSafeZone"] = "Свободная зона экрана: задайте, какая часть экрана над снегом должна оставаться чистой. Снег не сможет подняться выше границы.",
             ["guideWind"] = "Ветер: включите его для меняющихся горизонтальных порывов или отключите для более спокойного снегопада.",
             ["guideCursor"] = "Взаимодействие с курсором: в режиме «Разбрасывание снега» снежинки разлетаются от указателя. В режиме «Варежка» зажмите левую кнопку мыши на поверхности сугроба и водите курсором, чтобы собирать снег в шар. Оверлей перехватывает ввод только над снежным слоем и готовыми снежными объектами; в остальной области клики проходят насквозь.",
             ["guideSnowballs"] = "Снеговик: переключите режим взаимодействия с курсором на «Варежка». Зажмите левую кнопку мыши на накопленном снегу и водите курсором по сугробу, чтобы слепить шар. Отпустите кнопку, чтобы оставить его. Сделайте большой, средний и маленький шары, затем перетащите и поставьте их друг на друга от самого большого к самому маленькому. Устойчивая конструкция превратится в снеговика.",
-            ["guideNote"] = "Сейчас настройки сбрасываются при закрытии Flake. Накопленный снег также хранится только в течение текущего сеанса.",
+            ["guideNote"] = "Сейчас настройки сбрасываются при закрытии Snowfall Studio. Накопленный снег также хранится только в течение текущего сеанса.",
             ["languageLabel"] = "Язык интерфейса",
             ["languageHint"] = "Выберите английский, русский или украинский. Перезапуск не требуется.",
-            ["trayTooltip"] = "Flake — снег на рабочем столе",
-            ["trayRunning"] = "Flake работает",
+            ["trayTooltip"] = "Snowfall Studio — снег на рабочем столе",
+            ["trayRunning"] = "Snowfall Studio работает",
             ["trayPause"] = "Приостановить снегопад",
             ["trayResume"] = "Продолжить снегопад",
             ["trayClear"] = "Очистить накопленный снег",
@@ -111,11 +111,11 @@ internal static class Localization
             ["trayClearAllSnow"] = "Удалить весь снег, включая падающий",
             ["traySettings"] = "Настройки...",
             ["trayWeatherMode"] = "Режим погоды",
-            ["trayExit"] = "Выйти из Flake"
+            ["trayExit"] = "Выйти из Snowfall Studio"
         },
         new Dictionary<string, string>
         {
-            ["settingsTitle"] = "Налаштування Flake",
+            ["settingsTitle"] = "Налаштування Snowfall Studio",
             ["tabWeather"] = "Погода",
             ["tabGuide"] = "Інструкція",
             ["tabLanguage"] = "Мова",
@@ -141,20 +141,20 @@ internal static class Localization
             ["large"] = "Великий",
             ["slow"] = "Повільно",
             ["fast"] = "Швидко",
-            ["guideTitle"] = "Як користуватися Flake",
-            ["guideIntro"] = "Flake додає анімований сніг поверх робочого столу. Оверлей пропускає кліки, тому вікнами можна користуватися як зазвичай.",
-            ["guidePause"] = "Пауза та продовження снігопаду: скористайтеся значком Flake в області сповіщень або двічі натисніть на нього.",
+            ["guideTitle"] = "Як користуватися Snowfall Studio",
+            ["guideIntro"] = "Snowfall Studio додає анімований сніг поверх робочого столу. Оверлей пропускає кліки, тому вікнами можна користуватися як зазвичай.",
+            ["guidePause"] = "Пауза та продовження снігопаду: скористайтеся значком Snowfall Studio в області сповіщень або двічі натисніть на нього.",
             ["guideClear"] = "Прибирання снігу: виберіть «Очистити накопичений сніг» у меню значка. Шар буде плавно прибраний анімацією.",
             ["guideSettings"] = "Налаштування погоди: виберіть режим або змініть вітер, розмір сніжинок і швидкість падіння. Зміни застосовуються одразу.",
             ["guideSafeZone"] = "Вільна зона екрана: задайте, яка частина екрана над снігом має залишатися чистою. Сніг не зможе піднятися вище межі.",
             ["guideWind"] = "Вітер: увімкніть його для мінливих горизонтальних поривів або вимкніть для спокійнішого снігопаду.",
             ["guideCursor"] = "Взаємодія з курсором: у режимі «Розлітання снігу» сніжинки відлітають від вказівника. У режимі «Рукавиця» затисніть ліву кнопку миші на поверхні замету та ведіть курсор, щоб збирати сніг у кулю. Оверлей перехоплює введення лише над сніговим шаром і готовими сніговими об’єктами; в іншій області кліки проходять крізь нього.",
             ["guideSnowballs"] = "Сніговик: перемкніть режим взаємодії з курсором на «Рукавиця». Затисніть ліву кнопку миші на накопиченому снігу та ведіть курсор по замету, щоб зліпити кулю. Відпустіть кнопку, щоб залишити її. Зробіть велику, середню та маленьку кулі, потім перетягніть і поставте їх одна на одну від найбільшої до найменшої. Стійка конструкція перетвориться на сніговика.",
-            ["guideNote"] = "Зараз налаштування скидаються після закриття Flake. Накопичений сніг також зберігається лише протягом поточного сеансу.",
+            ["guideNote"] = "Зараз налаштування скидаються після закриття Snowfall Studio. Накопичений сніг також зберігається лише протягом поточного сеансу.",
             ["languageLabel"] = "Мова інтерфейсу",
             ["languageHint"] = "Виберіть англійську, російську або українську. Перезапуск не потрібен.",
-            ["trayTooltip"] = "Flake — сніг на робочому столі",
-            ["trayRunning"] = "Flake працює",
+            ["trayTooltip"] = "Snowfall Studio — сніг на робочому столі",
+            ["trayRunning"] = "Snowfall Studio працює",
             ["trayPause"] = "Призупинити снігопад",
             ["trayResume"] = "Продовжити снігопад",
             ["trayClear"] = "Очистити накопичений сніг",
@@ -162,7 +162,7 @@ internal static class Localization
             ["trayClearAllSnow"] = "Видалити весь сніг, включно з падаючим",
             ["traySettings"] = "Налаштування...",
             ["trayWeatherMode"] = "Режим погоди",
-            ["trayExit"] = "Вийти з Flake"
+            ["trayExit"] = "Вийти з Snowfall Studio"
         }
     ];
 

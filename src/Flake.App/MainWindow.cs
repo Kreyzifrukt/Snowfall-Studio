@@ -12,7 +12,7 @@ public sealed class MainWindow : Window
 
     public MainWindow()
     {
-        Title = "Flake";
+        Title = "Snowfall Studio";
         WindowStyle = WindowStyle.None;
         ResizeMode = ResizeMode.NoResize;
         AllowsTransparency = true;

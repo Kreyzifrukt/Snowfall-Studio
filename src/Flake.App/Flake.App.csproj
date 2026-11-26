@@ -8,7 +8,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Flake</RootNamespace>
-    <AssemblyName>Flake</AssemblyName>
+    <AssemblyName>SnowfallStudio</AssemblyName>
+    <Product>Snowfall Studio</Product>
+    <AssemblyTitle>Snowfall Studio</AssemblyTitle>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 </Project>

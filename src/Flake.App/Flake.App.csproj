@@ -13,4 +13,11 @@
     <AssemblyTitle>Snowfall Studio</AssemblyTitle>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SnowfallStudio.Application\SnowfallStudio.Application.csproj" />
+    <ProjectReference Include="..\SnowfallStudio.Core\SnowfallStudio.Core.csproj" />
+    <ProjectReference Include="..\SnowfallStudio.Infrastructure\SnowfallStudio.Infrastructure.csproj" />
+    <ProjectReference Include="..\SnowfallStudio.Platform.Windows\SnowfallStudio.Platform.Windows.csproj" />
+    <ProjectReference Include="..\SnowfallStudio.Rendering.Wpf\SnowfallStudio.Rendering.Wpf.csproj" />
+  </ItemGroup>
 </Project>
